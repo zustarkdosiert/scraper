@@ -1,0 +1,43 @@
+import time
+import datetime
+from selenium import webdriver  # lädt das WebDriver-Modul
+from selenium.webdriver.common.by import By   # wird zum Lokalisieren von Elementen benötigt
+
+
+kriptomat_url = 'https://kriptomat.io/de/'
+kriptomat_bitcoin_url = 'https://kriptomat.io/de/kryptowaehrungen-kurse/bitcoin-btc-kurs/'
+
+
+def Cookies_Akzeptieren(driver):
+    driver.get(kriptomat_url)
+    driver.find_element(By.ID, 'cookiescript_accept').click()
+
+
+def Kurs_Ablesen(driver):
+    driver.get(kriptomat_bitcoin_url)
+    time.sleep(1)
+    return driver.find_element(By.ID, 'main-price').get_attribute('innerHTML')
+
+
+def Kursrechner(driver):
+    time.sleep(1)
+    driver.find_element(By.XPATH, '//*[@id="calc_coin_eur"]').clear()
+    driver.find_element(By.XPATH, '//*[@id="calc_coin_eur"]').send_keys(50)
+
+    return driver.find_element(By.XPATH, '//*[@id="calc_coin"]').get_attribute('value')
+
+
+driver = webdriver.Chrome("chromedriver.exe")   # initialisiert Chromebrowser auf den man mit 'driver' zugreifen kann
+driver.maximize_window()
+
+time.sleep(2)
+Cookies_Akzeptieren(driver)
+time.sleep(2)
+
+while True:
+    aktueller_wert = Kurs_Ablesen(driver)
+    print(f"Der Bitcoin ist aktuell {aktueller_wert}€ wert - Uhrzeit: {datetime.datetime.now().strftime('%H:%M:%S')}")
+    print(f"Deine 50€ entsprechen aktuell {(Kursrechner(driver))} Bitcoin - Uhrzeit: {datetime.datetime.now().strftime('%H:%M:%S')}")
+    print("")
+
+    time.sleep(10)
