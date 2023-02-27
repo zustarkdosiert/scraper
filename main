@@ -14,8 +14,6 @@ def Cookies_Akzeptieren(driver):
 
 
 def Kurs_Ablesen(driver):
-    driver.get(kriptomat_bitcoin_url)
-    time.sleep(1)
     return driver.find_element(By.ID, 'main-price').get_attribute('innerHTML')
 
 
@@ -32,6 +30,7 @@ driver.maximize_window()
 
 time.sleep(2)
 Cookies_Akzeptieren(driver)
+driver.get(kriptomat_bitcoin_url)
 time.sleep(2)
 
 while True:
