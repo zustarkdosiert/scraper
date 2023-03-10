@@ -1,3 +1,11 @@
+#Voraussetzungen:
+#1. Chromebrowser (oder Firefox)
+#2. Chromedriver (https://chromedriver.chromium.org/downloads)
+#3. Selenium (https://www.selenium.dev/documentation/webdriver)
+#
+#Dokumentation: https://selenium-python.readthedocs.io/
+
+
 import time
 import datetime
 from selenium import webdriver  # lädt das WebDriver-Modul
